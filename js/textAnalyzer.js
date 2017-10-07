@@ -1,7 +1,7 @@
 //Cache the DOM
-const output = document.getElementById("output");
-const input = document.getElementById("textarea");
-const copyButton = document.getElementById("copyButton");
+var output = document.getElementById("output");
+var input = document.getElementById("textarea");
+var copyButton = document.getElementById("copyButton");
 
 function textInfo() { //computes various info about the text input
     characterCounter.innerHTML = input.value.length;
@@ -91,7 +91,7 @@ function trimWhitespace() { //trim leading/trailing whitespace
     output.value = input.value.trim();
 }
 
-function shuffle(string) { 
+function shuffle(string) {
     // helper function to shuffle string
     // Fisher–Yates shuffle - https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
     var parts = string.split('');
@@ -104,7 +104,7 @@ function shuffle(string) {
     return parts.join('');
 }
 
-function shuffleString() { 
+function shuffleString() {
     //shuffle string
     output.value = shuffle(input.value)
 }
@@ -119,3 +119,40 @@ function removeNumbers() {
     output.value = input.value.replace(/[0-9]/g, '');
 }
 
+function rot13() {
+    var original = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    var shifted = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
+    output.value = input.value.replace(/[A-Za-z]/g, function (char) {
+        return original.charAt(shifted.indexOf(char))
+    });
+}
+
+function camelCase(){
+    //Get it Capitalized
+    var capsCased = input.value.replace(/\s/g, ' ').split(' ').map(function(word) {
+        if(word) {
+            return word[0].toUpperCase() + word.slice(1)
+        } else {
+            return '';
+        }
+    }).join(' ');
+    // Make the first letter as Lower Case
+    capsCased = capsCased.charAt(0).toLowerCase()+capsCased.substring(1);
+    output.value = capsCased.split(" ").join("");
+}
+
+function snakeCase() {
+    output.value = input.value.trim().replace(/ /g, '_');
+}
+
+function shuffleWords() {
+    var words = input.value.split(" ");
+    var a, b, i;
+    for (i = words.length; i; i--) {
+        a = Math.floor(Math.random() * i);
+        b = words[i - 1];
+        words[i - 1] = words[a];
+        words[a] = b;
+    }
+    output.value = words.join(" ");
+}
